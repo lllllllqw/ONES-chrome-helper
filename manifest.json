@@ -10,9 +10,11 @@
     "default_icon": "favicon2020.png",
     "default_popup": "popup.html"
   },
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  }
+  "content_scripts": [
+    {
+      "matches": ["https://dev.myones.net/*"],
+      "js": ["src/inject.js"],
+      "run_at": "document_end"
+    }
+  ]
 }
