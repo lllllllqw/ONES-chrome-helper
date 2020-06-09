@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["src/inject.js"],
+      "js": ["dist/content_scripts.js"],
       "run_at": "document_end"
     }
   ]

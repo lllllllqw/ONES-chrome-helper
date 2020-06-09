@@ -1,0 +1,15 @@
+{
+  "name": "ONES-chrome-helper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lllllllqw/ONES-chrome-helper.git",
+  "author": "lllllllqw <465633856@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "rollup": "^2.12.1"
+  }
+}
