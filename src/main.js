@@ -2,9 +2,9 @@ initBranchInput()
 initBranchButtons()
 
 function initBranchInput() {
-  chrome.storage.local.get(['branch'], ({ branch }) => {
+  chrome.storage.local.get(['projectBranch'], ({ projectBranch }) => {
     const branchInputEl = document.querySelector('#branch-input')
-    branchInputEl.value = branch || ''
+    branchInputEl.value = projectBranch || ''
     branchInputEl.focus()
 
     const ENTER_KEY = 13
@@ -38,7 +38,7 @@ function confirmInput() {
 
 function setBranch(branchValue) {
   chrome.storage.local.set({
-    branch: branchValue,
+    projectBranch: branchValue,
   })
 }
 
