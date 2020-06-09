@@ -33,12 +33,11 @@ function addStylesheet() {
   styleEl.innerHTML = `
     .${CLS_PREFIX}api-info-wrapper {
       position: fixed;
-      top: 10px;
-      left: 50%;
-      padding: 10px;
+      right: 10px;
+      bottom: 10px;
+      padding: 5px 10px;
       background-color: yellow;
       opacity: 0.4;
-      transform: translateX(-50%);
       pointer-events: none;
       z-index: 999;
       border-radius: 5px;
@@ -64,7 +63,7 @@ function showCustomApiInfo() {
   const projectBranch = localStorage.getItem(PROJECT_BRANCH_KEY);
   const projectBranchInfoEl = createOptionEl({
     name: 'project api',
-    value: projectBranch
+    value: projectBranch || '默认'
   });
   wrapperEl.appendChild(projectBranchInfoEl);
   document.body.appendChild(wrapperEl);
