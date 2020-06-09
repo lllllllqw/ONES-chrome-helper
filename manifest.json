@@ -12,7 +12,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://dev.myones.net/*"],
+      "matches": ["https://dev.myones.net/*", "http://dev.localhost:3000/*"],
       "js": ["src/inject.js"],
       "run_at": "document_end"
     }
