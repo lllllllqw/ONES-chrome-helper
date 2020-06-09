@@ -4,7 +4,7 @@ initBranchButtons()
 function initBranchInput() {
   chrome.storage.local.get(['branch'], ({ branch }) => {
     const branchInputEl = document.querySelector('#branch-input')
-    branchInputEl.value = branch
+    branchInputEl.value = branch || ''
     branchInputEl.focus()
 
     const ENTER_KEY = 13
