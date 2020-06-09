@@ -1,10 +1,13 @@
 'use strict';
 
+const PROJECT_BRANCH_KEY = 'customONESApiProjectBranch';
+
 initBranchInput();
 initBranchButtons();
 
 function initBranchInput() {
-  chrome.storage.local.get(['projectBranch'], ({ projectBranch }) => {
+  chrome.storage.local.get([PROJECT_BRANCH_KEY], (data) => {
+    const projectBranch = data[PROJECT_BRANCH_KEY];
     const branchInputEl = document.querySelector('#branch-input');
     branchInputEl.value = projectBranch || '';
     branchInputEl.focus();
@@ -40,7 +43,7 @@ function confirmInput() {
 
 function setBranch(branchValue) {
   chrome.storage.local.set({
-    projectBranch: branchValue,
+    [PROJECT_BRANCH_KEY]: branchValue,
   });
 }
 

@@ -2,8 +2,14 @@ import {
   setProjectCustomApi,
   setWikiCustomApi
 } from './setCustomApi'
+import { showCustomApiInfo } from './showCustomApiInfo'
 
 export function run() {
-  setProjectCustomApi()
-  setWikiCustomApi()
+  Promise.all([
+    setProjectCustomApi(),
+    setWikiCustomApi()
+  ])
+    .then(() => {
+      showCustomApiInfo()
+    })
 }
