@@ -2,6 +2,24 @@
 
 const PROJECT_BRANCH_KEY = 'customONESApiProjectBranch';
 
+const CUSTOM_API_CHANGED = 'customApiChanged';
+
+function getCurrentTab() {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    }, (tabs) => {
+      const tab = tabs[0];
+      if(tab) {
+        resolve(tab);
+      } else {
+        reject(new Error('tab not found'));
+      }
+    });
+  })
+}
+
 initBranchInput();
 initBranchButtons();
 
@@ -30,7 +48,6 @@ function initBranchButtons() {
   const resetButtonEl = document.querySelector('#reset');
   resetButtonEl.addEventListener('click', () => {
     clearBranch();
-    window.close();
   });
 }
 
@@ -38,15 +55,26 @@ function confirmInput() {
   const branchInputEl = document.querySelector('#branch-input');
   const branchValue = branchInputEl.value;
   setBranch(branchValue);
-  window.close();
 }
 
 function setBranch(branchValue) {
-  chrome.storage.local.set({
-    [PROJECT_BRANCH_KEY]: branchValue,
-  });
+  return new Promise((resolve) => {
+    chrome.storage.local.set({
+      [PROJECT_BRANCH_KEY]: branchValue,
+    }, () => {
+      return getCurrentTab()
+        .then((tab) => {
+          const { id } = tab;
+          if(id) {
+            chrome.tabs.sendMessage(id, {
+              type: CUSTOM_API_CHANGED
+            });
+          }
+        })
+    });
+  })
 }
 
 function clearBranch() {
-  setBranch(null);
+  return setBranch(null)
 }

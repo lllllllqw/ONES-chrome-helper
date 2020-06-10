@@ -1,4 +1,6 @@
 import { PROJECT_BRANCH_KEY } from "../common/constants"
+import { CUSTOM_API_CHANGED } from "../common/message_type"
+import { getCurrentTab } from "../common/tabs"
 
 initBranchInput()
 initBranchButtons()
@@ -28,7 +30,6 @@ function initBranchButtons() {
   const resetButtonEl = document.querySelector('#reset')
   resetButtonEl.addEventListener('click', () => {
     clearBranch()
-    window.close()
   })
 }
 
@@ -36,15 +37,26 @@ function confirmInput() {
   const branchInputEl = document.querySelector('#branch-input')
   const branchValue = branchInputEl.value
   setBranch(branchValue)
-  window.close()
 }
 
 function setBranch(branchValue) {
-  chrome.storage.local.set({
-    [PROJECT_BRANCH_KEY]: branchValue,
+  return new Promise((resolve) => {
+    chrome.storage.local.set({
+      [PROJECT_BRANCH_KEY]: branchValue,
+    }, () => {
+      return getCurrentTab()
+        .then((tab) => {
+          const { id } = tab
+          if(id) {
+            chrome.tabs.sendMessage(id, {
+              type: CUSTOM_API_CHANGED
+            })
+          }
+        })
+    })
   })
 }
 
 function clearBranch() {
-  setBranch(null)
+  return setBranch(null)
 }

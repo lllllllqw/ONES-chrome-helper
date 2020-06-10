@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["http://dev.localhost/*", "https://dev.myones.net/*"],
-      "js": ["dist/content_scripts.js"],
+      "js": ["content_scripts.js"],
       "run_at": "document_end"
     }
   ]

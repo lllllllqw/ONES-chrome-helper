@@ -83,23 +83,38 @@ function syncCustomApiInfo() {
   wrapperEl.append(...optionElList);
 }
 
+const CUSTOM_API_CHANGED = 'customApiChanged';
+
+const setAllCustomApi = () => Promise.all([
+  setProjectCustomApi(),
+  setWikiCustomApi()
+]);
+
+const updateCustomApiInfo = () => setAllCustomApi()
+  .then(() => {
+    syncCustomApiInfo();
+  });
+
+const addEventListeners = () => {
+  window.addEventListener('hashchange', () => {
+    updateCustomApiInfo();
+  });
+
+  chrome.runtime.onMessage.addListener((message) => {
+    const type = message ? message.type : null;
+    if(type === CUSTOM_API_CHANGED) {
+      updateCustomApiInfo();
+    }
+  });
+};
+
 function run() {
-  const setAllCustomApi = () => Promise.all([
-    setProjectCustomApi(),
-    setWikiCustomApi()
-  ]);
-  
   setAllCustomApi()
     .then(() => {
       showCustomApiInfo();
     });
 
-  window.addEventListener('hashchange', () => {
-    setAllCustomApi()
-      .then(() => {
-        syncCustomApiInfo();
-      });
-  });
+  addEventListeners();
 }
 
 run();
