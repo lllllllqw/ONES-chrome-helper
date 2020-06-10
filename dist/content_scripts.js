@@ -1,119 +1,137 @@
 'use strict';
 
-const PROJECT_BRANCH_KEY = 'customONESApiProjectBranch';
-const WIKI_BRANCH_KEY = 'customONESApiWikiBranch';
+var PROJECT_BRANCH_KEY = 'customONESApiProjectBranch';
+var WIKI_BRANCH_KEY = 'customONESApiWikiBranch';
 
 function setCustomApi(storageKey, prefix) {
-  return new Promise((resolve) => {
-    chrome.storage.local.get([storageKey], (data) => {
-      const branch = data[storageKey];
-      if(branch) {
-        console.log(`set ${storageKey}`, branch);
-        localStorage.setItem(storageKey, `${prefix}/${branch}/`);
+  return new Promise(function (resolve) {
+    chrome.storage.local.get([storageKey], function (data) {
+      var branch = data[storageKey];
+
+      if (branch) {
+        console.log("set ".concat(storageKey), branch);
+        localStorage.setItem(storageKey, "".concat(prefix, "/").concat(branch, "/"));
       } else {
         localStorage.removeItem(storageKey);
       }
+
       resolve();
     });
-  })
+  });
 }
 
 function setProjectCustomApi() {
-  return setCustomApi(PROJECT_BRANCH_KEY, '/project')
+  return setCustomApi(PROJECT_BRANCH_KEY, '/project');
 }
-
 function setWikiCustomApi() {
-  return setCustomApi(WIKI_BRANCH_KEY, '/wiki')
+  return setCustomApi(WIKI_BRANCH_KEY, '/wiki');
 }
 
-const DOM_SCOPE = 'och__';
-const WRAPPER_EL_ID = `och__custom-api-info`;
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+var DOM_SCOPE = 'och__';
+var WRAPPER_EL_ID = "och__custom-api-info";
 
 function addStylesheet() {
-  const styleEl = document.createElement('style');
-  styleEl.innerHTML = `
-    .${DOM_SCOPE}api-info-wrapper {
-      position: fixed;
-      right: 10px;
-      bottom: 10px;
-      padding: 5px 10px;
-      background-color: yellow;
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 999;
-      border-radius: 5px;
-    }
-  `;
+  var styleEl = document.createElement('style');
+  styleEl.innerHTML = "\n    .".concat(DOM_SCOPE, "api-info-wrapper {\n      position: fixed;\n      right: 10px;\n      bottom: 10px;\n      padding: 5px 10px;\n      background-color: yellow;\n      opacity: 0.4;\n      pointer-events: none;\n      z-index: 999;\n      border-radius: 5px;\n    }\n  ");
   document.body.append(styleEl);
 }
 
-function createOptionEl({
-  name,
-  value
-}) {
-  const optionEl = document.createElement('div');
-  optionEl.className = `${DOM_SCOPE}api-info-option`;
-  optionEl.innerText = `${name}：${value}`;
-  return optionEl
+function createOptionEl(_ref) {
+  var name = _ref.name,
+      value = _ref.value;
+  var optionEl = document.createElement('div');
+  optionEl.className = "".concat(DOM_SCOPE, "api-info-option");
+  optionEl.innerText = "".concat(name, "\uFF1A").concat(value);
+  return optionEl;
 }
 
 function getInfoOptionElList() {
-  const projectBranch = localStorage.getItem(PROJECT_BRANCH_KEY);
-  const projectBranchInfoEl = createOptionEl({
+  var projectBranch = localStorage.getItem(PROJECT_BRANCH_KEY);
+  var projectBranchInfoEl = createOptionEl({
     name: 'project api',
     value: projectBranch || '默认'
   });
-  return [projectBranchInfoEl]
+  return [projectBranchInfoEl];
 }
 
 function showCustomApiInfo() {
   addStylesheet();
-  const wrapperEl = document.createElement('div');
-  wrapperEl.className = `${DOM_SCOPE}api-info-wrapper`;
+  var wrapperEl = document.createElement('div');
+  wrapperEl.className = "".concat(DOM_SCOPE, "api-info-wrapper");
   wrapperEl.id = WRAPPER_EL_ID;
-  const optionElList = getInfoOptionElList();
-  wrapperEl.append(...optionElList);
+  var optionElList = getInfoOptionElList();
+  wrapperEl.append.apply(wrapperEl, _toConsumableArray(optionElList));
   document.body.append(wrapperEl);
 }
-
 function syncCustomApiInfo() {
-  const wrapperEl = document.querySelector(`#${WRAPPER_EL_ID}`);
-  const optionElList = getInfoOptionElList();
+  var wrapperEl = document.querySelector("#".concat(WRAPPER_EL_ID));
+  var optionElList = getInfoOptionElList();
   wrapperEl.innerHTML = '';
-  wrapperEl.append(...optionElList);
+  wrapperEl.append.apply(wrapperEl, _toConsumableArray(optionElList));
 }
 
-const CUSTOM_API_CHANGED = 'customApiChanged';
+var CUSTOM_API_CHANGED = 'customApiChanged';
 
-const setAllCustomApi = () => Promise.all([
-  setProjectCustomApi(),
-  setWikiCustomApi()
-]);
+var setAllCustomApi = function setAllCustomApi() {
+  return Promise.all([setProjectCustomApi(), setWikiCustomApi()]);
+};
 
-const updateCustomApiInfo = () => setAllCustomApi()
-  .then(() => {
+var updateCustomApiInfo = function updateCustomApiInfo() {
+  return setAllCustomApi().then(function () {
     syncCustomApiInfo();
   });
+};
 
-const addEventListeners = () => {
-  window.addEventListener('hashchange', () => {
+var addEventListeners = function addEventListeners() {
+  window.addEventListener('hashchange', function () {
     updateCustomApiInfo();
   });
+  chrome.runtime.onMessage.addListener(function (message) {
+    var type = message ? message.type : null;
 
-  chrome.runtime.onMessage.addListener((message) => {
-    const type = message ? message.type : null;
-    if(type === CUSTOM_API_CHANGED) {
+    if (type === CUSTOM_API_CHANGED) {
       updateCustomApiInfo();
     }
   });
 };
 
 function run() {
-  setAllCustomApi()
-    .then(() => {
-      showCustomApiInfo();
-    });
-
+  setAllCustomApi().then(function () {
+    showCustomApiInfo();
+  });
   addEventListeners();
 }
 
