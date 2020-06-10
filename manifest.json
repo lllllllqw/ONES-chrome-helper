@@ -7,13 +7,13 @@
     "storage"
   ],
   "icons": {
-    "16": "favicon2020.png",
-    "48": "favicon2020.png",
-    "64": "favicon2020.png",
-    "128": "favicon2020.png"
+    "16": "favicon2020_x16.png",
+    "48": "favicon2020_x1024.png",
+    "64": "favicon2020_x1024.png",
+    "128": "favicon2020_x1024.png"
   },
   "browser_action": {
-    "default_icon": "favicon2020.png",
+    "default_icon": "favicon2020_x16.png",
     "default_popup": "popup.html"
   },
   "content_scripts": [
