@@ -26,12 +26,13 @@ function setWikiCustomApi() {
   return setCustomApi(WIKI_BRANCH_KEY, '/wiki')
 }
 
-const CLS_PREFIX = 'och__';
+const DOM_SCOPE = 'och__';
+const WRAPPER_EL_ID = `och__custom-api-info`;
 
 function addStylesheet() {
   const styleEl = document.createElement('style');
   styleEl.innerHTML = `
-    .${CLS_PREFIX}api-info-wrapper {
+    .${DOM_SCOPE}api-info-wrapper {
       position: fixed;
       right: 10px;
       bottom: 10px;
@@ -43,7 +44,7 @@ function addStylesheet() {
       border-radius: 5px;
     }
   `;
-  document.body.appendChild(styleEl);
+  document.body.append(styleEl);
 }
 
 function createOptionEl({
@@ -51,32 +52,54 @@ function createOptionEl({
   value
 }) {
   const optionEl = document.createElement('div');
-  optionEl.className = `${CLS_PREFIX}api-info-option`;
+  optionEl.className = `${DOM_SCOPE}api-info-option`;
   optionEl.innerText = `${name}：${value}`;
   return optionEl
 }
 
-function showCustomApiInfo() {
-  addStylesheet();
-  const wrapperEl = document.createElement('div');
-  wrapperEl.className = `${CLS_PREFIX}api-info-wrapper`;
+function getInfoOptionElList() {
   const projectBranch = localStorage.getItem(PROJECT_BRANCH_KEY);
   const projectBranchInfoEl = createOptionEl({
     name: 'project api',
     value: projectBranch || '默认'
   });
-  wrapperEl.appendChild(projectBranchInfoEl);
-  document.body.appendChild(wrapperEl);
+  return [projectBranchInfoEl]
+}
+
+function showCustomApiInfo() {
+  addStylesheet();
+  const wrapperEl = document.createElement('div');
+  wrapperEl.className = `${DOM_SCOPE}api-info-wrapper`;
+  wrapperEl.id = WRAPPER_EL_ID;
+  const optionElList = getInfoOptionElList();
+  wrapperEl.append(...optionElList);
+  document.body.append(wrapperEl);
+}
+
+function syncCustomApiInfo() {
+  const wrapperEl = document.querySelector(`#${WRAPPER_EL_ID}`);
+  const optionElList = getInfoOptionElList();
+  wrapperEl.innerHTML = '';
+  wrapperEl.append(...optionElList);
 }
 
 function run() {
-  Promise.all([
+  const setAllCustomApi = () => Promise.all([
     setProjectCustomApi(),
     setWikiCustomApi()
-  ])
+  ]);
+  
+  setAllCustomApi()
     .then(() => {
       showCustomApiInfo();
     });
+
+  window.addEventListener('hashchange', () => {
+    setAllCustomApi()
+      .then(() => {
+        syncCustomApiInfo();
+      });
+  });
 }
 
 run();
