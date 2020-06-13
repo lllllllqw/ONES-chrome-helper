@@ -1,7 +1,7 @@
 import './style.scss';
 
-import { run as runCustomBranch } from './custom_branch';
+import { showCustomApi } from './custom_api';
 import { run as runOtherScript } from './other_script';
 
-runCustomBranch();
+showCustomApi();
 runOtherScript();

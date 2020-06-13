@@ -1,3 +1,3 @@
-const createMessageType = (type: string) => `och_${type}` 
+const createMessageType = (type: string) => `och_${type}`;
 
-export const BranchSettingChange = createMessageType('branchSettingChange');
+export const CustomApiChange = createMessageType('customApiChange');

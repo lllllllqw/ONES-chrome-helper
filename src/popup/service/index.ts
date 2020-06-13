@@ -1,3 +1,3 @@
-import * as branchSettingService from './branch_setting';
+import * as customApiService from './custom_api';
 
-export { branchSettingService };
+export { customApiService };

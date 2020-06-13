@@ -1,46 +1,45 @@
-import './index.scss'
+import './index.scss';
 
 import React, { useCallback } from 'react';
-import { Form, Input, Button, Switch } from 'antd'
-import { useMount } from 'react-use'
+import { Form, Input, Button, Switch } from 'antd';
+import { useMount } from 'react-use';
 import { PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY, SHOW_BRANCH_INFO } from '../../../common/constants';
-import { branchSettingService } from '../../service';
-import { BranchData } from '../../service/branch_setting';
+import { customApiService } from '../../service';
+import { BranchData } from '../../service/custom_api';
 
-export const BranchSetting: React.FC = () => {
-    const [form] = Form.useForm()
+export const CustomApi: React.FC = () => {
+    const [form] = Form.useForm();
 
     const syncFormData = async () => {
-        const projectBranch = await branchSettingService.getBranchSetting()
-        console.log("effect -> projectBranch", projectBranch)
+        const projectBranch = await customApiService.getCustomApi();
         form.setFieldsValue(projectBranch);
-    }
+    };
 
     const onFinishForm = useCallback(() => {
-        branchSettingService.saveBranchSetting(
-            form.getFieldsValue() as BranchData
-        )
-    }, [form])
+        customApiService.saveCustomApi(form.getFieldsValue() as BranchData).then(() => {
+            window.close();
+        });
+    }, [form]);
 
     const onResetClick = async () => {
-        await branchSettingService.saveBranchSetting({
+        await customApiService.saveCustomApi({
             [PROJECT_BRANCH_KEY]: null,
             [WIKI_BRANCH_KEY]: null,
-            [SHOW_BRANCH_INFO]: true
+            [SHOW_BRANCH_INFO]: true,
         });
-        syncFormData()
+        syncFormData();
     };
 
     useMount(() => {
-        syncFormData()
+        syncFormData();
     });
 
     return (
         <Form
-            className="branch-setting"
-            name="branch-setting"
-            wrapperCol={{span: 12}}
-            labelCol={{span: 4, offset: 4}}
+            className="custom-api"
+            name="custom-api"
+            wrapperCol={{ span: 12 }}
+            labelCol={{ span: 4, offset: 4 }}
             form={form}
             onFinish={onFinishForm}
         >
@@ -53,7 +52,7 @@ export const BranchSetting: React.FC = () => {
             <Form.Item name={SHOW_BRANCH_INFO} label="分支提示" valuePropName="checked">
                 <Switch />
             </Form.Item>
-            <Form.Item wrapperCol={{offset: 8, span: 12}}>
+            <Form.Item wrapperCol={{ offset: 8, span: 12 }}>
                 <Button type="primary" htmlType="submit">
                     提交
                 </Button>
@@ -63,4 +62,4 @@ export const BranchSetting: React.FC = () => {
             </Form.Item>
         </Form>
     );
-}
+};
