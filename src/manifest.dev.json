@@ -4,9 +4,7 @@
     "version": "1.0",
     "manifest_version": 2,
     "minimum_chrome_version": "80",
-    "permissions": [
-        "storage"
-    ],
+    "permissions": ["storage", "webRequest", "*://*/*"],
     "background": {
         "scripts": ["js/background.js"],
         "persistent": true
@@ -34,4 +32,3 @@
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
 }
-
