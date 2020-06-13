@@ -4,7 +4,7 @@
 1. clone 本仓库
 2. 打开 chrome，进入 **chrome://extensions/**
 3. 打开开发者模式
-4. 加载已解压的扩展程序
+4. 加载已解压的扩展程序, 选择 extension 目录
 
 ### 更新 chrome 插件
 1. pull 仓库代码

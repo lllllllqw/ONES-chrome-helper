@@ -1,0 +1,15 @@
+@import '~styles/reset.scss';
+
+
+body {
+    height: auto;
+}
+
+#root {
+    height: 100%;
+    width: 600px;
+}
+
+.app {
+    padding: 30px 20px ;
+}
