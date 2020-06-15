@@ -1,12 +1,10 @@
 @import '~styles/reset.scss';
 
-body {
-    height: auto;
-}
-
+html,
+body,
 #root {
-    width: 600px;
-    height: 100%;
+    width: 600px !important;
+    height: 260px !important;
 }
 
 .app {

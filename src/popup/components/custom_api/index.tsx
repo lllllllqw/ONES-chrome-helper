@@ -44,7 +44,7 @@ export const CustomApi: React.FC = () => {
             onFinish={onFinishForm}
         >
             <Form.Item name={PROJECT_BRANCH_KEY} label="Project API">
-                <Input />
+                <Input autoFocus />
             </Form.Item>
             <Form.Item name={WIKI_BRANCH_KEY} label="Wiki API">
                 <Input />
