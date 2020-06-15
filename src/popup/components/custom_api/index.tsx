@@ -49,7 +49,7 @@ export const CustomApi: React.FC = () => {
             <Form.Item name={WIKI_BRANCH_KEY} label="Wiki API">
                 <Input />
             </Form.Item>
-            <Form.Item name={SHOW_BRANCH_INFO} label="分支提示" valuePropName="checked">
+            <Form.Item name={SHOW_BRANCH_INFO} label="提示面板" valuePropName="checked">
                 <Switch />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 12 }}>

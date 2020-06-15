@@ -2,8 +2,8 @@ import { resolve } from 'path';
 import { BannerPlugin, HashedModuleIdsPlugin } from 'webpack';
 import merge from 'webpack-merge';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+// import TerserPlugin from 'terser-webpack-plugin';
+// import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
@@ -32,20 +32,21 @@ const mergedConfig = merge(commonConfig, {
         new LodashModuleReplacementPlugin(),
         new AntdDayjsWebpackPlugin(),
     ],
+    /** 会导致 prod build 不可用，先注释 */
     optimization: {
-        runtimeChunk: 'single',
-        splitChunks: {
-            chunks: 'all',
-        },
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                cache: true,
-                parallel: true,
-                extractComments: false,
-            }),
-            new OptimizeCSSAssetsPlugin(),
-        ],
+        // runtimeChunk: 'single',
+        // splitChunks: {
+        //     chunks: 'all',
+        // },
+        // minimize: true,
+        // minimizer: [
+        //     new TerserPlugin({
+        //         cache: true,
+        //         parallel: true,
+        //         extractComments: false,
+        //     }),
+        //     new OptimizeCSSAssetsPlugin(),
+        // ],
     },
 });
 
