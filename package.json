@@ -21,11 +21,6 @@
         "clean": "rimraf -rf ./extension ./dist ./*.zip ./*.crx",
         "reinstall": "rimraf -rf ./node_modules && yarn"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
         "*.{ts,tsx,js}": [
             "eslint -c .eslintrc.js"
