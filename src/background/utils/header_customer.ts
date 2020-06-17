@@ -4,10 +4,18 @@ function isLeancloudUrl(url: string) {
     return url.includes('leancloud.cn');
 }
 
+function isAliCDNUrl(url: string) {
+    return url.includes('at.alicdn.com');
+}
+
+function isIgnoreUrl(url: string) {
+    return isLeancloudUrl(url) || isAliCDNUrl(url);
+}
+
 function addCustomHeadersListener(getHeaders: () => Headers): void {
     chrome.webRequest.onBeforeSendHeaders.addListener(
         (details) => {
-            if (details.requestHeaders && !isLeancloudUrl(details.url)) {
+            if (details.requestHeaders && !isIgnoreUrl(details.url)) {
                 details.requestHeaders.push(...getHeaders());
             }
             return { requestHeaders: details.requestHeaders };
