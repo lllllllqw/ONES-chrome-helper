@@ -1,9 +1,13 @@
 export type Headers = chrome.webRequest.HttpHeader[];
 
+function isLeancloudUrl(url: string) {
+    return url.includes('leancloud.cn');
+}
+
 function addCustomHeadersListener(getHeaders: () => Headers): void {
     chrome.webRequest.onBeforeSendHeaders.addListener(
         (details) => {
-            if (details.requestHeaders) {
+            if (details.requestHeaders && !isLeancloudUrl(details.url)) {
                 details.requestHeaders.push(...getHeaders());
             }
             return { requestHeaders: details.requestHeaders };
