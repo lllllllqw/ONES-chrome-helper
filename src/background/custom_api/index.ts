@@ -13,21 +13,21 @@ export function customApi(): void {
                     name: 'x-ones-api-host',
                     value: customHOST,
                 })
-            }
-
-            const projectBranch = data[PROJECT_BRANCH_KEY];
-            if (projectBranch) {
-                headers.push({
-                    name: 'x-ones-api-branch-project',
-                    value: `/project/${projectBranch}/`,
-                });
-            }
-            const wikiBranch = data[WIKI_BRANCH_KEY];
-            if (wikiBranch) {
-                headers.push({
-                    name: 'x-ones-api-branch-wiki',
-                    value: `/wiki/${wikiBranch}/`,
-                });
+            } else {
+                const projectBranch = data[PROJECT_BRANCH_KEY];
+                if (projectBranch) {
+                    headers.push({
+                        name: 'x-ones-api-branch-project',
+                        value: `/project/${projectBranch}/`,
+                    });
+                }
+                const wikiBranch = data[WIKI_BRANCH_KEY];
+                if (wikiBranch) {
+                    headers.push({
+                        name: 'x-ones-api-branch-wiki',
+                        value: `/wiki/${wikiBranch}/`,
+                    });
+                }
             }
             headerCustomer.setHeaders(headers);
         });
