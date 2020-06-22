@@ -11,7 +11,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://dev.localhost/*", "https://dev.myones.net/*"],
+            "matches": ["http://dev.localhost/*", "https://dev.myones.net/*", "https://ones.ai/*"],
             "css": ["css/all.css"],
             "js": ["js/all.js"],
             "run_at": "document_end"

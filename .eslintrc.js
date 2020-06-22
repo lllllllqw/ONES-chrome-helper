@@ -51,7 +51,8 @@ module.exports = {
         'import/prefer-default-export': OFF,
 
         'react/jsx-indent': [ERROR, 4],
-        'indent': [ERROR, 4],
+        'react/jsx-props-no-spreading': OFF,
+        indent: [ERROR, 4],
         'react/jsx-filename-extension': [ERROR, { extensions: ['.ts', '.tsx', '.json', '.js'] }],
 
         'unicorn/filename-case': [

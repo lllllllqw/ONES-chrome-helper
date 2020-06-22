@@ -1,10 +1,18 @@
 @import '~styles/reset.scss';
 
 .app {
+    display: flex;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
 
-    .title {
-        text-align: center;
+    .custom-api {
+        width: 500px;
+
+        .pattern-config {
+            .ant-space-item:nth-child(2) {
+                flex: 1;
+            }
+        }
     }
 }
