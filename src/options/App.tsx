@@ -1,12 +1,14 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 
+import { CustomApi } from './custom_api';
+
 import './App.scss';
 
 const App = () => {
     return (
         <div className="app">
-            <h1 className="title">options page</h1>
+            <CustomApi />
         </div>
     );
 };

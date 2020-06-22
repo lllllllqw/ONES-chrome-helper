@@ -91,7 +91,7 @@ const commonConfig: Configuration = {
             minify: __DEV__ ? false : htmlMinifyOptions,
             chunks: ['options'],
             filename: 'options.html',
-            title: 'options page',
+            title: 'ONES Chrome Helper 配置',
             template: resolve(PROJECT_ROOT, 'public/options.html'),
         }),
         new HtmlWebpackPlugin({

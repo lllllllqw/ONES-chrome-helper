@@ -1,7 +1,7 @@
 {
     "name": "ONES Chrome Helper",
     "description": "yoooooooooooooo.",
-    "version": "1.0",
+    "version": "1.0.1",
     "manifest_version": 2,
     "minimum_chrome_version": "80",
     "permissions": ["storage", "webRequest", "webRequestBlocking", "*://*/*"],
@@ -11,7 +11,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://dev.localhost/*", "https://dev.myones.net/*"],
+            "matches": ["http://dev.localhost/*", "https://dev.myones.net/*", "https://ones.ai/*"],
             "css": ["css/all.css"],
             "js": ["js/all.js"],
             "run_at": "document_end"
