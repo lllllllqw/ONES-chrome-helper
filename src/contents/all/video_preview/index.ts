@@ -137,7 +137,7 @@ function handleVideo(inComment: boolean) {
             if (!filenameEl) {
                 return;
             }
-            const filename = filenameEl.innerHTML;
+            const filename = filenameEl.textContent!;
             const resourceActions = resourceItem.querySelector('.resource-actions');
             if (isVideoType(filename)) {
                 const previewBox = getPreviewBox(filename, inComment);
