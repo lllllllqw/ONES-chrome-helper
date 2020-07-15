@@ -15,4 +15,4 @@
 
 ### Template
 
-https://github.com/tjx666/awesome-chrome-extension-boilerplate
+[awesome-chrome-extension-boilerplate](https://github.com/tjx666/awesome-chrome-extension-boilerplate)

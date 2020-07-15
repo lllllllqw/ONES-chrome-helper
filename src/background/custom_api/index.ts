@@ -1,33 +1,38 @@
-import { HeaderCustomer, Headers } from '../utils/header_customer';
+import { HeaderCustomer, HeaderCustomerOptions, Headers } from '../utils/header_customer';
 import { PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY, ONES_HOST_KEY } from '../../common/constants';
 import { customApiService } from '../../popup/service';
 
 function syncApiSetting(headerCustomer: HeaderCustomer) {
-    const headers: Headers = [];
     chrome.storage.local.get([ONES_HOST_KEY, PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY], (data) => {
-        const customHOST = data[ONES_HOST_KEY];
-        if (customHOST) {
-            headers.push({
-                name: 'x-ones-api-host',
-                value: customHOST,
-            })
-        } else {
-            const projectBranch = data[PROJECT_BRANCH_KEY];
-            if (projectBranch) {
+        const headerBuilder: HeaderCustomerOptions['headersBuilder'] = (details) => {
+            const headers: Headers = [];
+            const customHOST = data[ONES_HOST_KEY];
+            if (customHOST) {
                 headers.push({
-                    name: 'x-ones-api-branch-project',
-                    value: `/project/${projectBranch}/`,
-                });
+                    name: 'x-ones-api-host',
+                    value: customHOST,
+                })
+            } else {
+                const isProjectApi = details.url.includes('/api/project')
+                const prefix = isProjectApi ? '/project' : '/wiki'
+                const projectBranch = data[PROJECT_BRANCH_KEY];
+                if (projectBranch) {
+                    headers.push({
+                        name: 'x-ones-api-branch-project',
+                        value: `${prefix}/${projectBranch}/`,
+                    });
+                }
+                const wikiBranch = data[WIKI_BRANCH_KEY];
+                if (wikiBranch) {
+                    headers.push({
+                        name: 'x-ones-api-branch-wiki',
+                        value: `${prefix}/${wikiBranch}/`,
+                    });
+                }
             }
-            const wikiBranch = data[WIKI_BRANCH_KEY];
-            if (wikiBranch) {
-                headers.push({
-                    name: 'x-ones-api-branch-wiki',
-                    value: `/wiki/${wikiBranch}/`,
-                });
-            }
+            return headers;
         }
-        headerCustomer.setHeaders(headers);
+        headerCustomer.setHeadersBuilder(headerBuilder);
     });
 }
 

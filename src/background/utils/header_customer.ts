@@ -1,36 +1,27 @@
 export type Headers = chrome.webRequest.HttpHeader[];
 
-// function isLeancloudUrl(url: string) {
-//     return url.includes('leancloud.cn');
-// }
-
-// function isAliCDNUrl(url: string) {
-//     return url.includes('at.alicdn.com');
-// }
-
-// function isSentryURL(url: string) {
-//     return url.includes('sentry.io');
-// }
-
-// function isIgnoreUrl(url: string) {
-//     return isLeancloudUrl(url) || isAliCDNUrl(url) || isSentryURL(url);
-// }
+export interface HeaderCustomerOptions {
+    headersBuilder: (details: chrome.webRequest.WebRequestDetails) => Headers;
+}
 
 export class HeaderCustomer {
-    private headers: Headers = [];
-
+    
     private patterns: string[] = [];
+    
+    options: HeaderCustomerOptions = {
+        headersBuilder: () => []
+    }
 
     constructor() {
         this.addCustomHeadersListener();
     }
 
-    getHeaders = (): Headers => {
-        return this.headers;
+    buildHeaders = (details: chrome.webRequest.WebRequestDetails): Headers => {
+        return this.options.headersBuilder ? this.options.headersBuilder(details) : [];
     };
 
-    setHeaders = (headers: Headers): void => {
-        this.headers = headers;
+    setHeadersBuilder = (headersBuilder: HeaderCustomerOptions['headersBuilder']): void => {
+        this.options.headersBuilder = headersBuilder;
     };
 
     getPatterns = (): string[] => {
@@ -46,7 +37,7 @@ export class HeaderCustomer {
         details: chrome.webRequest.WebRequestHeadersDetails,
     ): chrome.webRequest.BlockingResponse => {
         if (details.requestHeaders) {
-            details.requestHeaders.push(...this.getHeaders());
+            details.requestHeaders.push(...this.buildHeaders(details));
         }
         return { requestHeaders: details.requestHeaders };
     };
