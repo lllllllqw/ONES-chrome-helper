@@ -1,9 +1,9 @@
 import { HeaderCustomer, HeaderCustomerOptions, Headers } from '../utils/header_customer';
-import { PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY, ONES_HOST_KEY } from '../../common/constants';
+import { PROJECT_BRANCH_KEY, ONES_HOST_KEY } from '../../common/constants';
 import { customApiService } from '../../service';
 
 function syncApiSetting(headerCustomer: HeaderCustomer) {
-    chrome.storage.local.get([ONES_HOST_KEY, PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY], (data) => {
+    chrome.storage.local.get([ONES_HOST_KEY, PROJECT_BRANCH_KEY], (data) => {
         const headerBuilder: HeaderCustomerOptions['headersBuilder'] = (details) => {
             const headers: Headers = [];
             const customHOST = data[ONES_HOST_KEY];
@@ -13,20 +13,18 @@ function syncApiSetting(headerCustomer: HeaderCustomer) {
                     value: customHOST,
                 })
             } else {
-                const isProjectApi = details.url.includes('/api/project')
-                const prefix = isProjectApi ? '/project' : '/wiki'
                 const projectBranch = data[PROJECT_BRANCH_KEY];
                 if (projectBranch) {
+                    const isProjectApi = details.url.includes('/api/project')
+                    const prefix = isProjectApi ? '/project' : '/wiki'
+                    const value = `${prefix}/${projectBranch}/`
                     headers.push({
                         name: 'x-ones-api-branch-project',
-                        value: `${prefix}/${projectBranch}/`,
+                        value,
                     });
-                }
-                const wikiBranch = data[WIKI_BRANCH_KEY];
-                if (wikiBranch) {
                     headers.push({
                         name: 'x-ones-api-branch-wiki',
-                        value: `${prefix}/${wikiBranch}/`,
+                        value,
                     });
                 }
             }

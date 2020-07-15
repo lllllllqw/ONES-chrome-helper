@@ -3,7 +3,7 @@ import './index.scss';
 import React, { useCallback } from 'react';
 import { Form, Input, Button, Switch } from 'antd';
 import { useMount } from 'react-use';
-import { PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY, SHOW_BRANCH_INFO, ONES_HOST_KEY } from '../../../common/constants';
+import { PROJECT_BRANCH_KEY, SHOW_BRANCH_INFO, ONES_HOST_KEY } from '../../../common/constants';
 import { customApiService } from '../../../service';
 import { BranchData } from '../../../service/custom_api';
 
@@ -25,7 +25,6 @@ export const CustomApi: React.FC = () => {
         await customApiService.saveCustomApi({
             [ONES_HOST_KEY]: null,
             [PROJECT_BRANCH_KEY]: null,
-            [WIKI_BRANCH_KEY]: null,
             [SHOW_BRANCH_INFO]: true,
         });
         syncFormData();
@@ -47,11 +46,8 @@ export const CustomApi: React.FC = () => {
             <Form.Item name={ONES_HOST_KEY} label="API Host">
                 <Input autoFocus />
             </Form.Item>
-            <Form.Item name={PROJECT_BRANCH_KEY} label="Project API">
+            <Form.Item name={PROJECT_BRANCH_KEY} label="API Branch">
                 <Input autoFocus />
-            </Form.Item>
-            <Form.Item name={WIKI_BRANCH_KEY} label="Wiki API">
-                <Input />
             </Form.Item>
             <Form.Item name={SHOW_BRANCH_INFO} label="提示面板" valuePropName="checked">
                 <Switch />

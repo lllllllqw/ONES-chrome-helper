@@ -1,4 +1,4 @@
-import { ONES_HOST_KEY, PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY } from '../../../common/constants';
+import { ONES_HOST_KEY, PROJECT_BRANCH_KEY } from '../../../common/constants';
 
 const DOM_SCOPE = 'och__';
 const WRAPPER_EL_ID = `och__custom-api-info`;
@@ -12,25 +12,20 @@ function createOptionEl({ name, value }: { name: string; value: string }) {
 
 function getInfoOptionElList(): Promise<HTMLElement[]> {
     return new Promise((resolve) => {
-        chrome.storage.local.get([ONES_HOST_KEY, PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY], (data) => {
+        chrome.storage.local.get([ONES_HOST_KEY, PROJECT_BRANCH_KEY], (data) => {
 
             const onesHost = data[ONES_HOST_KEY];
             const onesHostInfoEL = createOptionEl({
                 name: 'API Host',
-                value: onesHost || 'dev默认'
+                value: onesHost || '默认'
             })
 
             const projectBranch = data[PROJECT_BRANCH_KEY];
             const projectBranchInfoEl = createOptionEl({
-                name: 'Project API',
+                name: 'API Branch',
                 value: projectBranch || '默认',
             });
-            const wikiBranch = data[WIKI_BRANCH_KEY];
-            const wikiBranchInfoEl = createOptionEl({
-                name: 'Wiki API',
-                value: wikiBranch || '默认',
-            });
-            resolve([onesHostInfoEL, projectBranchInfoEl, wikiBranchInfoEl]);
+            resolve([onesHostInfoEL, projectBranchInfoEl]);
         });
     });
 }
