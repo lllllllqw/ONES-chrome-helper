@@ -2,7 +2,7 @@ import './index.scss';
 
 import { showCustomApiInfo, syncCustomApiInfo } from './show_custom_api_info';
 import { CustomApiChange } from '../../../common/message_type';
-import { getCustomApi } from '../../../popup/service/custom_api';
+import { getCustomApi } from '../../../service/custom_api';
 
 const addEventListeners = () => {
     window.addEventListener('hashchange', () => {

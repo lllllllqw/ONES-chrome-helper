@@ -1,6 +1,6 @@
 import { HeaderCustomer, HeaderCustomerOptions, Headers } from '../utils/header_customer';
 import { PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY, ONES_HOST_KEY } from '../../common/constants';
-import { customApiService } from '../../popup/service';
+import { customApiService } from '../../service';
 
 function syncApiSetting(headerCustomer: HeaderCustomer) {
     chrome.storage.local.get([ONES_HOST_KEY, PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY], (data) => {

@@ -1,12 +1,12 @@
-import { CustomApiChange } from '../../common/message_type';
-import { getCurrentTab } from '../../common/tabs';
+import { CustomApiChange } from '../common/message_type';
+import { getCurrentTab } from '../common/tabs';
 import {
     ONES_HOST_KEY,
     PROJECT_BRANCH_KEY,
     WIKI_BRANCH_KEY,
     SHOW_BRANCH_INFO,
     CUSTOM_API_PATTERNS,
-} from '../../common/constants';
+} from '../common/constants';
 
 export interface PatternConfig {
     enable: boolean;

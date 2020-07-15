@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 import { Form, Input, Button, Switch } from 'antd';
 import { useMount } from 'react-use';
 import { PROJECT_BRANCH_KEY, WIKI_BRANCH_KEY, SHOW_BRANCH_INFO, ONES_HOST_KEY } from '../../../common/constants';
-import { customApiService } from '../../service';
-import { BranchData } from '../../service/custom_api';
+import { customApiService } from '../../../service';
+import { BranchData } from '../../../service/custom_api';
 
 export const CustomApi: React.FC = () => {
     const [form] = Form.useForm();

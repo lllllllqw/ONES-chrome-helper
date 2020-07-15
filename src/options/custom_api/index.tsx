@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Space, PageHeader, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useDebounce, useUpdate } from 'react-use';
-import { customApiService } from '../../popup/service';
+import { customApiService } from '../../service';
 import { CUSTOM_API_PATTERNS } from '../../common/constants';
-import { PatternConfig } from '../../popup/service/custom_api';
+import { PatternConfig } from '../../service/custom_api';
 
 const onFinish = (values: { patterns?: PatternConfig[] }) => {
     console.log('Received values of form:', values);
