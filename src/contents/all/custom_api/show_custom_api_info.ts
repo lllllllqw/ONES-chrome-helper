@@ -22,9 +22,12 @@ function getInfoOptionElList(): Promise<HTMLElement[]> {
 
             const projectBranch = data[PROJECT_BRANCH_KEY];
             const projectBranchInfoEl = createOptionEl({
-                name: 'API Branch',
+                name: 'API 分支',
                 value: projectBranch || '默认',
             });
+            if(projectBranch) {
+                console.log('通过 ONES Chrome Helper 设定分支：', projectBranch)
+            }
             resolve([onesHostInfoEL, projectBranchInfoEl]);
         });
     });
