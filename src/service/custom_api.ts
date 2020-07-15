@@ -38,6 +38,7 @@ export function getCustomApi(): Promise<BranchData> {
                 const branchData: BranchData = {
                     ...data,
                     [CUSTOM_API_PATTERNS]: data[CUSTOM_API_PATTERNS] || defaultPatterns,
+                    [SHOW_BRANCH_INFO]: data[SHOW_BRANCH_INFO] || false
                 } as BranchData;
                 resolve(branchData);
             },

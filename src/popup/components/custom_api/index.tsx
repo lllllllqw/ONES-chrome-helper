@@ -3,6 +3,7 @@ import './index.scss';
 import React, { useCallback } from 'react';
 import { Form, Input, Button, Switch } from 'antd';
 import { useMount } from 'react-use';
+import { noop } from 'lodash';
 import { PROJECT_BRANCH_KEY, SHOW_BRANCH_INFO, ONES_HOST_KEY } from '../../../common/constants';
 import { customApiService } from '../../../service';
 import { BranchData } from '../../../service/custom_api';
@@ -15,10 +16,8 @@ export const CustomApi: React.FC = () => {
         form.setFieldsValue(projectBranch);
     };
 
-    const onFinishForm = useCallback(() => {
-        customApiService.saveCustomApi(form.getFieldsValue() as BranchData).then(() => {
-            window.close();
-        });
+    const onFormChange = useCallback(() => {
+        customApiService.saveCustomApi(form.getFieldsValue() as BranchData)
     }, [form]);
 
     const onResetClick = async () => {
@@ -41,7 +40,8 @@ export const CustomApi: React.FC = () => {
             wrapperCol={{ span: 12 }}
             labelCol={{ span: 4, offset: 4 }}
             form={form}
-            onFinish={onFinishForm}
+            onChange={onFormChange}
+            onFinish={noop}
         >
             <Form.Item name={ONES_HOST_KEY} label="API Host">
                 <Input autoFocus />
@@ -53,11 +53,11 @@ export const CustomApi: React.FC = () => {
                 <Switch />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 12 }}>
-                <Button type="primary" htmlType="submit">
-                    提交
-                </Button>
                 <Button htmlType="button" onClick={onResetClick}>
                     重置
+                </Button>
+                <Button type="primary" htmlType="submit">
+                    添加到输入建议
                 </Button>
             </Form.Item>
         </Form>
