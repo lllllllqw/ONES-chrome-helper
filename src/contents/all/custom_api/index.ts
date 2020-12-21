@@ -39,9 +39,6 @@ export async function showCustomApi(): Promise<void> {
     if(!isMatchUrl) {
         return
     }
-    const branchSetting = await getCustomApi();
-    if (branchSetting.showBranchInfo) {
-        showCustomApiInfo();
-    }
+    showCustomApiInfo();
     addEventListeners();
 }

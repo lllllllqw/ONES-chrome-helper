@@ -1,10 +1,10 @@
 import './index.scss';
 
 import React, { useCallback } from 'react';
-import { Form, Input, Button, Switch } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { useMount } from 'react-use';
 import { noop } from 'lodash';
-import { PROJECT_BRANCH_KEY, SHOW_BRANCH_INFO, ONES_HOST_KEY } from '../../../common/constants';
+import { PROJECT_BRANCH_KEY, ONES_HOST_KEY } from '../../../common/constants';
 import { customApiService } from '../../../service';
 import { BranchData } from '../../../service/custom_api';
 
@@ -24,10 +24,16 @@ export const CustomApi: React.FC = () => {
         await customApiService.saveCustomApi({
             [ONES_HOST_KEY]: null,
             [PROJECT_BRANCH_KEY]: null,
-            [SHOW_BRANCH_INFO]: true,
         });
         syncFormData();
     };
+
+    const onSubmitClick = useCallback(() => {
+        Promise.resolve()
+            .then(() => {
+                window.close()
+            })
+    }, [])
 
     useMount(() => {
         syncFormData();
@@ -49,15 +55,12 @@ export const CustomApi: React.FC = () => {
             <Form.Item name={PROJECT_BRANCH_KEY} label="API Branch">
                 <Input autoFocus />
             </Form.Item>
-            <Form.Item name={SHOW_BRANCH_INFO} label="提示面板" valuePropName="checked">
-                <Switch />
-            </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 12 }}>
                 <Button htmlType="button" onClick={onResetClick}>
                     重置
                 </Button>
-                <Button type="primary" htmlType="submit">
-                    添加到输入建议
+                <Button type="primary" htmlType="submit" onClick={onSubmitClick}>
+                    完成
                 </Button>
             </Form.Item>
         </Form>
