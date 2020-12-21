@@ -2,7 +2,6 @@ import './index.scss';
 
 import { showCustomApiInfo, syncCustomApiInfo } from './show_custom_api_info';
 import { CustomApiChange } from '../../../common/message_type';
-import { getCustomApi } from '../../../service/custom_api';
 import { customApiService } from '../../../service';
 import { CUSTOM_API_PATTERNS } from '../../../common/constants';
 import { patternToRegExp } from '../../../common/url_pattern';
